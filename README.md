@@ -1,5 +1,15 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## To-Do App
+
+The home page (`/`) is a simple To-Do list application. Features include:
+
+- **Add items** — type a task in the input field and press **Add** (or hit Enter).
+- **Complete items** — click the **Done** button next to an open item to mark it as closed. Completed items are shown with a strikethrough in a separate _Completed_ section.
+- **Reopen items** — click **Reopen** on any completed item to move it back to the open list.
+
+All state is held in React component state (client-side only, no persistence across page reloads).
+
 ## Getting Started
 
 First, run the development server:
