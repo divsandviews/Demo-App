@@ -31,6 +31,41 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is configured for automated deployment to the **"do app"** Vercel project via GitHub Actions.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### CI/CD Workflow
+
+The `.github/workflows/deploy.yml` workflow runs on every push and pull request to `main`:
+
+| Trigger | Action |
+|---|---|
+| Push to `main` | Lint → Build → **Deploy to Production** |
+| Pull Request to `main` | Lint → Build → **Deploy Preview** (URL posted as PR comment) |
+
+### One-time Setup: Link Vercel Project
+
+Before the workflow can deploy, add the following **GitHub repository secrets** (Settings → Secrets and variables → Actions):
+
+| Secret name | How to get it |
+|---|---|
+| `VERCEL_TOKEN` | Vercel dashboard → Account Settings → Tokens → Create |
+| `VERCEL_ORG_ID` | Run `vercel link` locally, then copy `orgId` from `.vercel/project.json` |
+| `VERCEL_PROJECT_ID` | Run `vercel link` locally, then copy `projectId` from `.vercel/project.json` |
+
+#### Linking the project locally
+
+```bash
+npm install --global vercel
+vercel link        # follow prompts; select the existing "do app" project (do NOT create a new one)
+cat .vercel/project.json   # copy orgId and projectId for the secrets above
+```
+
+### Rollback
+
+To roll back a production deployment, go to the Vercel dashboard → **Deployments**, find the previous deployment, and click **Promote to Production**.
+
+### Manual one-click deploy
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/divsandviews/Demo-App)
+
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
