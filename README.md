@@ -20,6 +20,82 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## State Management with Zustand
+
+This project uses [Zustand](https://zustand-demo.pmnd.rs/) as its global state management solution.
+
+### Store Structure
+
+```
+src/
+└── store/
+    ├── index.ts       # Creates and exports the unified Zustand store
+    └── appSlice.ts    # App-level state slice (appName, welcomeMessage)
+```
+
+### How It Works
+
+The store is created in `src/store/index.ts` by composing individual slices. Each slice is defined in its own file under `src/store/` and follows the [`StateCreator`](https://github.com/pmndrs/zustand/blob/main/docs/guides/slices-pattern.md) pattern for modularity.
+
+**Reading state in a component:**
+
+```tsx
+"use client";
+
+import { useStore } from "@/store";
+
+export default function MyComponent() {
+  const { welcomeMessage, appName } = useStore();
+  return <h1>{welcomeMessage}</h1>;
+}
+```
+
+**Updating state:**
+
+```tsx
+const { setWelcomeMessage } = useStore();
+setWelcomeMessage("New message");
+```
+
+### Adding a New Slice
+
+1. Create `src/store/mySlice.ts` and export a `StateCreator`:
+
+   ```ts
+   import { StateCreator } from "zustand";
+
+   export interface MySlice {
+     count: number;
+     increment: () => void;
+   }
+
+   export const createMySlice: StateCreator<MySlice> = (set) => ({
+     count: 0,
+     increment: () => set((state) => ({ count: state.count + 1 })),
+   });
+   ```
+
+2. Add the slice to `src/store/index.ts`:
+
+   ```ts
+   import { MySlice, createMySlice } from "./mySlice";
+
+   export type StoreState = AppSlice & MySlice;
+
+   export const useStore = create<StoreState>()((...args) => ({
+     ...createAppSlice(...args),
+     ...createMySlice(...args),
+   }));
+   ```
+
+## Running Tests
+
+```bash
+npm test
+```
+
+Tests are located in `src/__tests__/` and cover both the Zustand store logic and component integration.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
