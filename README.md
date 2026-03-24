@@ -1,5 +1,23 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## To-Do App
+
+This app includes a simple to-do list feature built with React state management and Tailwind CSS.
+
+### Features
+
+- **Add items** – Type a task in the input field and press **Add** (or hit Enter) to add it to the list.
+- **Open items** – All newly added items appear in the **Open** section.
+- **Mark as complete** – Check the checkbox next to an item to move it to the **Completed** section with a strikethrough.
+- **Reopen items** – Uncheck a completed item to move it back to the **Open** section.
+
+### Usage
+
+1. Run the development server (see [Getting Started](#getting-started) below).
+2. Open [http://localhost:3000](http://localhost:3000) in your browser.
+3. Type a task in the input field and click **Add** or press **Enter**.
+4. Check the checkbox next to a task to mark it as completed.
+
 ## Getting Started
 
 First, run the development server:
